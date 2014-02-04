@@ -8,5 +8,5 @@ railroad-reconstruction
 
 Папки:
 
-* [articles](https://github.com/igrechuhin/railroad-reconstruction/tree/master/articles) -- Статьи по тематике исследования
-* [3d-models](https://github.com/igrechuhin/railroad-reconstruction/tree/master/3d-models) -- Коллекция 3d моделей
+* [articles](https://github.com/igrechuhin/railroad-reconstruction/tree/master/articles) -- Статьи по тематике исследования.
+* [3d-models](https://github.com/igrechuhin/railroad-reconstruction/tree/master/3d-models) -- Коллекция 3d моделей.
