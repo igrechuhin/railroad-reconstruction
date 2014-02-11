@@ -1,4 +1,4 @@
-solid Object01
+solid Object
   facet normal 0.000000e+000 -0.000000e+000 -1.000000e+000
     outer loop
       vertex 1.168503e+001 -1.878573e+001 0.000000e+000
@@ -6859,4 +6859,4 @@ solid Object01
       vertex 1.501046e+001 -5.788884e+001 5.000000e-003
     endloop
   endfacet
-endsolid Object01
+endsolid Object
