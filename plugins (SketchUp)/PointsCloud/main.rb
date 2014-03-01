@@ -24,7 +24,7 @@ module PointsCloud
     f=File.new(@path,"r")
  	  while line = f.gets
     	xyz = line.chomp.split(',')
-   		entities.add_cpoint Geom::Point3d.new (xyz[0].to_f.m,xyz[1].to_f.m,xyz[2].to_f.m)
+   		entities.add_cpoint Geom::Point3d.new(xyz[0].to_f.m,xyz[1].to_f.m,xyz[2].to_f.m)
     	i +=1
     end#while
     f.close
@@ -46,15 +46,3 @@ file = File.basename(__FILE__)
   end#unless
 
 end#module
-
-
-
-
-
-
-
-
-
-
-
-

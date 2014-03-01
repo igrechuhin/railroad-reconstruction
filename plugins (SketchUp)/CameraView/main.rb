@@ -19,7 +19,7 @@ module CameraView
 
     
     title = @model.title
-    @path_to_save_to = UI.savepanel ("Save images", "c:\\", "#{title}.png")
+    @path_to_save_to = UI.savepanel("Save images", "c:\\", "#{title}.png")
     
  	end#def
 
@@ -76,15 +76,3 @@ file = File.basename(__FILE__)
   end#unless
 
 end#module
-
-
-
-
-
-
-
-
-
-
-
-
