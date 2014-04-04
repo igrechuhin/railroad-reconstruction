@@ -1,14 +1,18 @@
 # Add more folders to ship with the application, here
-folder_01.source = qml/qt-pcl
-folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
+qmlFolder.source = qml/qt-pcl
+qmlFolder.target = qml
+
+imagesFolder.source = images
+
+DEPLOYMENTFOLDERS = qmlFolder imagesFolder
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    testwriter.cpp
+    testwriter.cpp \
+    pointcloudprocessor.cpp
 
 # Installation path
 # target.path =
@@ -18,7 +22,8 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    testwriter.h
+    testwriter.h \
+    pointcloudprocessor.h
 
 macx: INCLUDEPATH += \
     /usr/local/include/pcl-1.6 \
@@ -34,3 +39,6 @@ LIBS += \
     -lpcl_io \
     -lpcl_common \
     -lusb-1.0.0
+
+RESOURCES += \
+    resources.qrc
