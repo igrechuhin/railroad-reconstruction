@@ -11,3 +11,27 @@ build-qt-pcl-Desktop_Qt_5_2_1_clang_64bit-Debug
 *.user
 
 *.suo
+
+*.lastbuildstate
+
+*.pdb
+
+*.ilk
+
+*.exe
+
+*.tlog
+
+*.obj
+
+*.manifest
+
+*.idb
+
+projects/Qt-PCL/debug/moc_point_cloud_processor.cpp
+
+projects/Qt-PCL/debug/moc_qtquick2applicationviewer.cpp
+
+projects/Qt-PCL/debug/moc_test_writer.cpp
+
+projects/Qt-PCL/GeneratedFiles/qrc_resources.cpp
