@@ -5,7 +5,7 @@ import QtQuick.Dialogs 1.1
 
 //import ru.railroad.reconstruction.experiment 1.0
 
-import ru.railroad.reconstruction.processor 1.0
+import ru.railroad.reconstruction.processor 1.1
 
 Rectangle {
     width: 640
@@ -64,20 +64,38 @@ Rectangle {
         }
     }
 
-    StatusBar {
-        id: statusbar
+    ListView {
+//        width: 100; height: 100
 
         anchors {
+            top: parent.top + 50
             bottom: parent.bottom
             left: parent.left
             right: parent.right
         }
-        RowLayout {
-            Text {
-                id: statusText
-                text: pcProcessor.status
-                anchors.centerIn: parent
-            }
+
+        model: pcProcessor.status
+        delegate: Rectangle {
+            height: 25
+            width: 100
+            Text { text: modelData }
         }
     }
+
+//    StatusBar {
+//        id: statusbar
+
+//        anchors {
+//            bottom: parent.bottom
+//            left: parent.left
+//            right: parent.right
+//        }
+//        RowLayout {
+//            Text {
+//                id: statusText
+//                text: pcProcessor.status
+//                anchors.centerIn: parent
+//            }
+//        }
+//    }
 }

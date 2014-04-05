@@ -50,20 +50,8 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pointcloudprocessor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="qtquick2applicationviewer\qtquick2applicationviewer.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="testwriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_pointcloudprocessor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug\moc_pointcloudprocessor.cpp">
-      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Release\moc_qtquick2applicationviewer.cpp">
       <Filter>Generated Files\Release</Filter>
@@ -71,24 +59,48 @@
     <ClCompile Include="Debug\moc_qtquick2applicationviewer.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Release\moc_testwriter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug\moc_testwriter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_resources.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_test_writer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_test_writer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="model_io.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="point_cloud_processor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_writer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="model_viewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_point_cloud_processor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_point_cloud_processor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="pointcloudprocessor.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="qtquick2applicationviewer\qtquick2applicationviewer.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="testwriter.h">
+    <CustomBuild Include="model.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="point_cloud_processor.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="test_writer.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -103,5 +115,13 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <None Include="qml\Qt-PCL\main.qml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="model_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="model_viewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
