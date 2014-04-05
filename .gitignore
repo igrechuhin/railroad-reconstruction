@@ -35,3 +35,5 @@ projects/Qt-PCL/debug/moc_qtquick2applicationviewer.cpp
 projects/Qt-PCL/debug/moc_test_writer.cpp
 
 projects/Qt-PCL/GeneratedFiles/qrc_resources.cpp
+
+*.user

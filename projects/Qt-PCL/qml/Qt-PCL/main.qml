@@ -3,32 +3,14 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 
-//import ru.railroad.reconstruction.experiment 1.0
-
 import ru.railroad.reconstruction.processor 1.1
 
 Rectangle {
-    width: 640
+    width: 300
     height: 400
 
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
-    }
-
-//        TestWriter {
-//            id: testWriter
-//        }
-
-//        MouseArea {
-//            anchors.fill: parent
-//            onClicked: {
-//                testWriter.writePCD();
-//    //            Qt.quit();
-//            }
-//        }
-
     PCProcessor { id: pcProcessor }
+
     FileDialog {
         id: modelOpenDialog
         title: qsTr("Select dots model")
@@ -56,46 +38,63 @@ Rectangle {
         height: 50
         RowLayout {
             id: toolbarLayout
-            x: -6
-            y: 3
+            x: 0
+            y: 0
             spacing: 0
             width: parent.width
             ToolButton { action: openAction }
         }
     }
 
-    ListView {
-//        width: 100; height: 100
-
-        anchors {
-            top: parent.top + 50
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-
-        model: pcProcessor.status
-        delegate: Rectangle {
-            height: 25
-            width: 100
-            Text { text: modelData }
+    Component {
+        id: highlight
+        Rectangle {
+            width: listView.width
+            height: 30
+            color: "lightsteelblue"
+            y: listView.currentItem.y
+            Behavior on y {
+                SpringAnimation {
+                    spring: 3
+                    damping: 0.2
+                }
+            }
         }
     }
 
-//    StatusBar {
-//        id: statusbar
+    Component {
+       id: contactDelegate
 
-//        anchors {
-//            bottom: parent.bottom
-//            left: parent.left
-//            right: parent.right
-//        }
-//        RowLayout {
-//            Text {
-//                id: statusText
-//                text: pcProcessor.status
-//                anchors.centerIn: parent
-//            }
-//        }
-//    }
+       Item {
+           id: listItem
+           width: listView.width
+           height: 30
+
+           Text {
+               verticalAlignment: Text.AlignBottom
+               text: '<b>'+index+'</b>: ' + modelData
+               wrapMode: Text.WrapAnywhere
+           }
+
+           MouseArea {
+               anchors.fill: parent
+               onClicked: {
+                   listView.currentIndex = index
+                   parent.forceActiveFocus()
+               }
+           }
+       }
+    }
+
+    ListView {
+        id: listView
+        x: 0
+        y: 50
+        width: parent.width
+        height: parent.height - 50
+        highlight: highlight
+        focus: true
+        model: pcProcessor.status
+        delegate: contactDelegate
+    }
 }
