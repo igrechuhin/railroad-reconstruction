@@ -7,7 +7,7 @@ module CameraView
     bbox = @model.bounds
     length = bbox.corner(7).y.to_f.to_m # (7 - right back top corner of the bounding box)
       
-    prompts = ["The height of the attachment point of the camera (m): ","The length of the path trains (m): ", "Number of photos: ","Images width  in pixels (max 16000): ","Images height  in pixels (max 16000): "]
+    prompts = ["Высота точки подвеса камеры (в метрах): ","Длина пути пройденного поездом (в метрах): ", "Кол-во фотографий: ","Ширина изображения в пикселях (max 16000): ","Высота изображения в пикселях (max 16000): "]
     defaults = ["2","#{length}", "7","1600","900"]
     input = UI.inputbox prompts, defaults, "Railway Camera View"
     return unless input
