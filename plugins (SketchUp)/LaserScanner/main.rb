@@ -7,7 +7,7 @@ module LaserScanner
     @model = Sketchup.active_model
     bbox = @model.bounds
     @length = bbox.corner(7).y.to_f.to_m # (7 - right back top corner of the bounding box)
-    prompts = [ "Длина пройденного поездом пути (в метрах): ","Высота точки подвеса лазера (в метрах): ", "Шаг d(fi) по углу вращения (в градусах)","Шаг поступательного движения поезда d(y)  (в метрах)","Угол между плоскостью вращения лазера и осью ОУ (в градусах): ","Среднеквадрати́чное отклоне́ние лазерного луча (в градусах): "]
+    prompts = [ "Длина пройденного поездом пути (в метрах): ","Высота точки подвеса лазера (в метрах): ", "Шаг d(fi) по углу вращения (в градусах)","Шаг поступательного движения поезда d(y)  (в метрах)","Угол между плоскостью вращения лазера и осью ОУ (в градусах): ","Среднеквадрати́чное отклонение лазерного луча (в градусах): "]
     defaults = ["#{@length}","2","1","0.1","90", "0.01"]
     list = ["","","","","",""]
     input = UI.inputbox prompts, defaults, list, "Railway Laser Scanner"
@@ -33,10 +33,10 @@ module LaserScanner
     l_position.z= @laser_height
     l_vector.y= 0
     if @angle == 90.degrees
-      puts ">> Scanning started. #{((@length/@d_y).floor+1)*((2*Math::PI/@d_fi).floor+1)} points. It may take a few minutes..."
+      puts ">> Scanning started. #{((@length/@d_y).floor+1)*((Math::PI/@d_fi).floor+1)} points. It may take a few minutes..."
       for i in 0..(@length/@d_y).floor 
       l_position.y= i*@d_y
-      for j in 0..(2*Math::PI/@d_fi).floor
+      for j in 0..(Math::PI/@d_fi).floor
         fi = (-1.0/2)*Math::PI+j*@d_fi
         l_vector.x= Math.cos(fi + self.rand_normal)
         l_vector.z= Math.sin(fi + self.rand_normal)
@@ -48,19 +48,19 @@ module LaserScanner
       end#for
       end#for
     else
-      puts ">> Scanning started. #{2*((@length/@d_y).floor+1)*((2*Math::PI/@d_fi).floor+1)} points. It may take a few minutes..."
+      puts ">> Scanning started. #{2*((@length/@d_y).floor+1)*((Math::PI/@d_fi).floor+1)} points. It may take a few minutes..."
       for i in 0..(@length/@d_y).floor 
       l_position.y= i*@d_y
-      for j in 0..(2*Math::PI/@d_fi).floor
+      for j in 0..(Math::PI/@d_fi).floor
         fi = (-1.0/2)*Math::PI+j*@d_fi
         l_vector.x= Math.cos(fi + self.rand_normal)
         l_vector.z= Math.sin(fi + self.rand_normal)
-        l_vector.y= Math.cos(@angle + self.rand_normal)
+        l_vector.y= l_vector.x*Math.tan(90.degrees-(@angle + self.rand_normal))
         item = @model.raytest([l_position, l_vector])
         unless item.nil? 
           f.write("#{item[0].x.to_f.to_m},#{item[0].y.to_f.to_m},#{item[0].z.to_f.to_m}\n")
         end#unless
-        l_vector.y= -1*Math.cos(@angle + self.rand_normal)
+        l_vector.y= l_vector.x*Math.tan(90.degrees+@angle + self.rand_normal)
         item = @model.raytest([l_position, l_vector])
         unless item.nil? 
           f.write("#{item[0].x.to_f.to_m},#{item[0].y.to_f.to_m},#{item[0].z.to_f.to_m}\n")
