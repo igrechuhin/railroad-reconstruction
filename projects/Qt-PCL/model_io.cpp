@@ -47,7 +47,7 @@ namespace railroad {
 
 	bool ModelIO::readPCD(QString & fileURL)
 	{
-		return pcl::io::loadPCDFile<PointT> (fileURL.toStdString(), *cloud) != -1;
+		return pcl::io::loadPCDFile<PointType> (fileURL.toStdString(), *cloud) != -1;
 	}
 
 	bool ModelIO::readCSV(QString & fileURL)
@@ -67,7 +67,7 @@ namespace railroad {
 					addStatus(QObject::tr("Invalid number in file: ") + line);
 					return false;
 				}
-				cloud->push_back(PointT(x, y, z));
+				cloud->push_back(PointType(x, y, z));
 			}
 
 			cloud->width = cloud->size();

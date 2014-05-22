@@ -3,8 +3,9 @@
 namespace railroad {
 
 	Model::Model()
-		: cloud(new pcl::PointCloud<PointT>),
-		  cloudValid(false)
+		: cloud(new pcl::PointCloud<PointType>)
+		, cloudValid(false)
+		, cloudFiltered(new pcl::PointCloud<PointType>)
 	{
 	}
 

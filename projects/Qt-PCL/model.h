@@ -10,7 +10,7 @@
 
 namespace railroad {
 
-#define PointT pcl::PointXYZ
+#define PointType pcl::PointXYZ
 
 	class Model
 	{
@@ -27,8 +27,10 @@ namespace railroad {
 		virtual void addStatus(const QString & status) = 0;
 
 	protected:
-		pcl::PointCloud<PointT>::Ptr cloud;
+		pcl::PointCloud<PointType>::Ptr cloud;
 		bool cloudValid;
+
+		pcl::PointCloud<PointType>::Ptr cloudFiltered;
 
 		QStringList statusList;
 	};

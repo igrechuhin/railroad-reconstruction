@@ -12,7 +12,7 @@ namespace railroad {
 		{
 			_viewer = std::make_shared<pcl::visualization::PCLVisualizer>("3D Viewer");
 			_viewer->setBackgroundColor(0, 0, 0);
-			_viewer->addPointCloud<PointT>(cloud);
+			_viewer->addPointCloud<PointType>(cloud);
 			_viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1);
 			_viewer->addCoordinateSystem(1.0);
 			_viewer->initCameraParameters();
@@ -22,6 +22,6 @@ namespace railroad {
 	void ModelViewer::draw()
 	{
 		init();
-		_viewer->updatePointCloud<PointT>(cloud);
+		_viewer->updatePointCloud<PointType>(cloud);
 	}
 }

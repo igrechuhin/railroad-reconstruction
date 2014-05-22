@@ -2,6 +2,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls.Styles 1.1
 
 import ru.railroad.reconstruction.processor 1.1
 
@@ -23,11 +24,28 @@ Rectangle {
 
     Action {
         id: openAction
-        text: qsTr("&Open")
+        text: qsTr("Open model")
         shortcut: StandardKey.Open
-        iconSource: "qrc:/images/document-open.png"
         onTriggered: modelOpenDialog.open()
         tooltip: qsTr("Open model")
+    }
+
+    Action {
+        id: euclideanClusterExtractionAction
+        text: qsTr("Euclidean Cluster Extraction")
+        onTriggered: pcProcessor.euclideanClusterExtraction()
+        tooltip: qsTr("Euclidean Cluster Extraction")
+    }
+
+    ButtonStyle {
+        id: toolButtonStyle
+        background: Rectangle {
+            implicitWidth: 100
+            implicitHeight: 25
+            border.width: 2
+            border.color: "#888"
+            radius: 4
+        }
     }
 
     ToolBar {
@@ -42,7 +60,38 @@ Rectangle {
             y: 0
             spacing: 0
             width: parent.width
-            ToolButton { action: openAction }
+            ToolButton {
+				action: openAction
+                style: ButtonStyle {
+                    background: Rectangle {
+                        implicitWidth: 100
+                        implicitHeight: 25
+                        border.width: 2
+                        border.color: "#888"
+                        radius: 4
+                        gradient: Gradient {
+                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                        }
+                    }
+                }
+			}
+			ToolButton {
+				action: euclideanClusterExtractionAction
+                style: ButtonStyle {
+                    background: Rectangle {
+                        implicitWidth: 100
+                        implicitHeight: 25
+                        border.width: 2
+                        border.color: "#888"
+                        radius: 4
+                        gradient: Gradient {
+                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                        }
+                    }
+                }
+			}
         }
     }
 

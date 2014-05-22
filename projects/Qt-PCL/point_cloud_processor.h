@@ -19,6 +19,8 @@ namespace railroad {
 
 		Q_INVOKABLE void readModel(const QUrl & url);
 
+		Q_INVOKABLE void euclideanClusterExtraction();
+
 		virtual void setValid(const bool & valid);
 		virtual void addStatus(const QString & status);
 
