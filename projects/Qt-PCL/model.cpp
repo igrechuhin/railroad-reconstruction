@@ -2,26 +2,31 @@
 
 namespace railroad {
 
-	Model::Model()
-		: cloud(new pcl::PointCloud<PointType>)
-		, cloudValid(false)
-		, cloudFiltered(new pcl::PointCloud<PointType>)
+	void Model::resetClouds()
 	{
-	}
-
-	void Model::resetCloud()
-	{
-		cloud->clear();
-		setValid(false);
-	}
-
-	bool Model::valid() const
-	{
-		return cloudValid;
+		cloudsMap.clear();
 	}
 
 	QStringList Model::status() const
 	{
 		return statusList;
 	}
+
+	QStringList Model::clouds() const
+	{
+		return cloudsMap.keys();
+	}
+
+	int Model::cloudsIndex() const
+	{
+		return cloudsMapIndex;
+	}
+
+	void Model::setCloudsIndex(const int & index)
+	{
+		cloudsMapIndex = index;
+	}
+
+	const QString Model::INPUT_CLOUD("Input cloud");
+	const QString Model::EUCLIDEAN_CLUSTERS("Euclidean Clusters");
 }

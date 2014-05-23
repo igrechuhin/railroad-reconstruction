@@ -20,37 +20,62 @@ namespace railroad {
 	{
 	}
 
-	void ModelIO::readModel(const QUrl & url)
+	bool ModelIO::readModel(const QUrl & url)
 	{
 		QString fileURL(url.toLocalFile());
 		addStatus(QObject::tr("Reading file: ") + fileURL);
 		if (url.isValid())
 		{
-			resetCloud();
+			resetClouds();
+			pcl::PointCloud<PointType>::Ptr cloud (new pcl::PointCloud<PointType>);
+
 			QString fileType = QFileInfo(fileURL).suffix();
 			if (fileType == QStringLiteral("pcd"))
 			{
-				setValid(readPCD(fileURL));
+				readPCD(fileURL, cloud);
 			}
 			else if (fileType == QStringLiteral("csv"))
 			{
-				setValid(readCSV(fileURL));
+				readCSV(fileURL, cloud);
 			}
 
-			addStatus((valid() ? QObject::tr("File read: ") : QObject::tr("Couldn't read file: ")) + fileURL);
+			if (cloud->empty())
+			{
+				addStatus(QObject::tr("Couldn't read file: ") + fileURL);
+			}
+			else
+			{
+				QList<pcl::PointCloud<PointType>::Ptr> cloudsList;
+				cloudsList.append(cloud);
+				addClouds(INPUT_CLOUD, cloudsList);
+				addStatus(QObject::tr("File read: ") + fileURL);
+				return true;
+			}
 		}
 		else
 		{
 			addStatus(QObject::tr("Invalid file url: ") + fileURL);
-		}	
+		}
+		return false;
 	}
 
-	bool ModelIO::readPCD(QString & fileURL)
+	void ModelIO::writeModel(const QUrl & url, const QString & cloudName)
 	{
-		return pcl::io::loadPCDFile<PointType> (fileURL.toStdString(), *cloud) != -1;
+		QString fileURL(url.toLocalFile());
+		addStatus(QObject::tr("Writing file: ") + fileURL);
+		if (url.isValid())
+		{
+			auto clouds = cloudsMap[cloudName];
+			writePCD(fileURL, clouds);
+		}
 	}
 
-	bool ModelIO::readCSV(QString & fileURL)
+	bool ModelIO::readPCD(QString & fileURL, pcl::PointCloud<PointType>::Ptr cloud)
+	{
+		return pcl::io::loadPCDFile<PointType>(fileURL.toStdString(), *cloud) != -1;
+	}
+
+	bool ModelIO::readCSV(QString & fileURL, pcl::PointCloud<PointType>::Ptr cloud)
 	{
 		QFile file(fileURL);
 		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -83,4 +108,18 @@ namespace railroad {
 		}
 	}
 
+	void ModelIO::writePCD(QString & fileURL, const QList<pcl::PointCloud<PointType>::Ptr> & clouds)
+	{
+		bool binaryMode = true;
+		int cloudIndex = 1;
+		foreach (pcl::PointCloud<PointType>::Ptr cloud, clouds)
+		{
+			QString url = fileURL;
+			if (clouds.size() > 1)
+			{
+				url.insert(url.lastIndexOf("."), QStringLiteral("_") + QString::number(cloudIndex++));
+			}
+			pcl::io::savePCDFile<PointType>(url.toStdString(), *cloud, binaryMode);
+		}
+	}
 }

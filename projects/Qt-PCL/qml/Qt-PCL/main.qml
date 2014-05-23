@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.1
 import ru.railroad.reconstruction.processor 1.1
 
 Rectangle {
-    width: 300
+    width: 500
     height: 400
 
     PCProcessor { id: pcProcessor }
@@ -22,6 +22,16 @@ Rectangle {
         onAccepted: pcProcessor.readModel(fileUrl)
     }
 
+    FileDialog {
+        id: modelSaveDialog
+        title: qsTr("Select file to save model")
+        selectExisting: false
+        selectFolder: false
+        selectMultiple: false
+        nameFilters: [ "PCL model (*.pcd)" ]
+        onAccepted: pcProcessor.writeModel(fileUrl, cloudSelection.currentText)
+    }
+
     Action {
         id: openAction
         text: qsTr("Open model")
@@ -31,20 +41,32 @@ Rectangle {
     }
 
     Action {
+        id: saveAction
+        text: qsTr("Save model")
+        shortcut: StandardKey.Save
+        onTriggered: modelSaveDialog.open()
+        tooltip: qsTr("Save model")
+    }
+
+    Action {
         id: euclideanClusterExtractionAction
         text: qsTr("Euclidean Cluster Extraction")
-        onTriggered: pcProcessor.euclideanClusterExtraction()
+        onTriggered: pcProcessor.euclideanClusterExtraction(cloudSelection.currentText)
         tooltip: qsTr("Euclidean Cluster Extraction")
     }
 
-    ButtonStyle {
-        id: toolButtonStyle
-        background: Rectangle {
-            implicitWidth: 100
-            implicitHeight: 25
-            border.width: 2
-            border.color: "#888"
-            radius: 4
+    Component {
+        id: btnStyle
+        ButtonStyle {
+            background: Rectangle {
+                border.width: 2
+                border.color: "#888"
+                radius: 4
+                gradient: Gradient {
+                    GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+                    GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                }
+            }
         }
     }
 
@@ -52,46 +74,33 @@ Rectangle {
         id: toolbar
         x: 0
         y: 0
-        width: parent.width
-        height: 50
-        RowLayout {
+        width: toolbarLayout.childrenRect.width + 12
+        height: parent.height
+        ColumnLayout {
             id: toolbarLayout
             x: 0
             y: 0
-            spacing: 0
-            width: parent.width
+            spacing: 5
             ToolButton {
-				action: openAction
-                style: ButtonStyle {
-                    background: Rectangle {
-                        implicitWidth: 100
-                        implicitHeight: 25
-                        border.width: 2
-                        border.color: "#888"
-                        radius: 4
-                        gradient: Gradient {
-                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                        }
-                    }
-                }
-			}
-			ToolButton {
-				action: euclideanClusterExtractionAction
-                style: ButtonStyle {
-                    background: Rectangle {
-                        implicitWidth: 100
-                        implicitHeight: 25
-                        border.width: 2
-                        border.color: "#888"
-                        radius: 4
-                        gradient: Gradient {
-                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                        }
-                    }
-                }
-			}
+                action: openAction
+                style: btnStyle
+            }
+            ComboBox {
+                id: cloudSelection
+                Layout.fillWidth: true
+                model: pcProcessor.clouds
+                onActivated: pcProcessor.draw(cloudSelection.currentText)
+            }
+            ToolButton {
+                action: saveAction
+                visible: cloudSelection.count != 0
+                style: btnStyle
+            }
+            ToolButton {
+                action: euclideanClusterExtractionAction
+                visible: cloudSelection.count != 0
+                style: btnStyle
+            }
         }
     }
 
@@ -137,10 +146,10 @@ Rectangle {
 
     ListView {
         id: listView
-        x: 0
-        y: 50
-        width: parent.width
-        height: parent.height - 50
+        x: toolbarLayout.childrenRect.width + 12
+        y: 0
+        width: parent.width - x
+        height: parent.height
         highlight: highlight
         focus: true
         model: pcProcessor.status

@@ -13,11 +13,14 @@ namespace railroad {
 		ModelIO();
 	
 	protected:
-		void readModel(const QUrl & url);
+		bool readModel(const QUrl & url);
+		void writeModel(const QUrl & url, const QString & cloudName);
 
 	private:
-		bool readPCD(QString & fileURL);
-		bool readCSV(QString & fileURL);	
+		bool readPCD(QString & fileURL, pcl::PointCloud<PointType>::Ptr cloud);
+		bool readCSV(QString & fileURL, pcl::PointCloud<PointType>::Ptr cloud);
+
+		void writePCD(QString & fileURL, const QList<pcl::PointCloud<PointType>::Ptr>& clouds);
 	};
 
 }

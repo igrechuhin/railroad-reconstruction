@@ -7,6 +7,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QMap>
 
 namespace railroad {
 
@@ -15,25 +16,27 @@ namespace railroad {
 	class Model
 	{
 	public:
-		Model();
-
-		bool valid() const;
 		QStringList status() const;
 
-	protected:
-		void resetCloud();
+		QStringList clouds() const;
+		
+		int cloudsIndex() const;
+		void setCloudsIndex(const int & index);
 
-		virtual void setValid(const bool & valid) = 0;
+	protected:
 		virtual void addStatus(const QString & status) = 0;
 
+		void resetClouds();
+		virtual void addClouds(const QString & name, const QList<pcl::PointCloud<PointType>::Ptr>& clouds) = 0;
+
 	protected:
-		pcl::PointCloud<PointType>::Ptr cloud;
-		bool cloudValid;
-
-		pcl::PointCloud<PointType>::Ptr cloudFiltered;
-
 		QStringList statusList;
-	};
 
+		QMap<QString, QList<pcl::PointCloud<PointType>::Ptr> > cloudsMap;
+		int cloudsMapIndex;
+
+		static const QString INPUT_CLOUD;
+		static const QString EUCLIDEAN_CLUSTERS;
+	};
 }
 #endif // MODEL_H

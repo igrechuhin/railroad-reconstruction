@@ -9,7 +9,7 @@ namespace railroad {
 	public:
 		ModelViewer();
 
-		void draw();
+		void draw(QList<pcl::PointCloud<PointType>::Ptr> clouds);
 
 	private:
 		void init();
