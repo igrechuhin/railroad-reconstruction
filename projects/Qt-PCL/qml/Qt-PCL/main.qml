@@ -89,7 +89,7 @@ Rectangle {
                 id: cloudSelection
                 Layout.fillWidth: true
                 model: pcProcessor.clouds
-                onActivated: pcProcessor.draw(cloudSelection.currentText)
+                onCurrentTextChanged: pcProcessor.draw(cloudSelection.currentText)
             }
             ToolButton {
                 action: saveAction
